@@ -1,5 +1,6 @@
 from Verifier import *
 from Prover import *
+import pySudoku
      
 def sudoku_pazzle_board():
     puzzle = [
@@ -18,12 +19,12 @@ def sudoku_pazzle_board():
 
 def solve_sudoku_puzzle(puzzle):
     solution = [
-        4,3,5,2,6,9,7,8,1, 
-        6,8,2,5,7,1,4,9,3, 
-        1,9,7,8,4,4,5,6,2, 
-        8,2,6,1,9,5,3,4,7, 
-        3,7,4,6,8,2,9,1,5, 
-        9,5,1,7,4,3,6,2,8, 
+        [4,3,5],[2,6,9],[7,8,1], 
+        [6,8,2],[5,7,1],[4,9,3], 
+        [1,9,7],[8,4,4],[5,6,2], 
+        [8,2,6],[1,9,5],[3,4,7], 
+        [3,7,4],[6,8,2],[9,1,5], 
+        [9,5,1],[7,4,3],[6,2,8], 
         5,1,9,3,2,6,8,7,4, 
         2,4,8,9,5,7,1,3,6, 
         7,6,3,4,1,8,2,5,9 
@@ -62,9 +63,81 @@ def PrintTable(puzzle):
     print("\n")
 
         
-unsolveTable = sudoku_pazzle_board()
-solvedTable = solve_sudoku_puzzle(unsolveTable)
+# unsolveTable = sudoku_pazzle_board()
+# solvedTable = solve_sudoku_puzzle(unsolveTable)
 
 #PrintTable(unsolveTable)
 #PrintTable(solvedTable)
 #print(solvedTable[1])
+
+# l = {"row1" : (1,2,3,4,5,6,7,8,9) , "row2" : (1,2,3,4,5,6,7,8,9)}
+#print(l["row1"][1])
+
+
+
+
+# rows = {}
+
+# def rowDictBuild(puzzle ,rowdict):
+#     for i in range(1,10):
+#         rowdict[i] = (0,0,0,0,0,0,0,0,0)
+
+
+#rowDictBuild(solvedTable,rows)
+#print(rows)
+
+#print(rows[2])
+
+#x = pySudoku.main()
+# print(f)
+
+# f = open('Sudokus2.txt') 
+# contents = f.read()
+# print(contents)
+
+# print("Done")
+
+x  = pySudoku.main()
+
+print("x0\n")
+print(x[0])
+
+s = x[0]
+print("x1\n")
+print(x[1])
+
+text = x[1]
+
+org = []
+while len(text) > 0:
+        l = []
+
+        # Get a row of numbers
+        while len(l) < 9:
+            if text[0].isdigit():
+                l.append(int(text[0]))
+            text = text[1:]
+
+        # Insert that row into the Sudoku grid
+        org.append(l)
+
+
+
+        if len(org) == 9:
+            break            
+           
+
+            # print("Solution:")
+            # print_sudoku(s)
+
+            print("="*30)
+            #temp = s
+            #s = []
+# pySudoku.print_sudoku(x[1])
+
+print(org)
+
+print("Done")
+
+pySudoku.print_sudoku(s)
+pySudoku.print_sudoku(org)
