@@ -139,7 +139,7 @@ def main():
 
         if len(s) == 9:
             num_puzzles += 1
-            print("Puzzle Number {:d}".format(num_puzzles))
+            #print("Puzzle Number {:d}".format(num_puzzles))
             print("Original:")
             print_sudoku(s)
             initial_try(s)
