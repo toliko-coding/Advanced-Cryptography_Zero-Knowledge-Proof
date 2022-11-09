@@ -14,6 +14,7 @@ The algorithm assumes that empty cells are denoted with a 0.
 
 
 import time
+import Generator
 
 def print_sudoku(s):
     """
@@ -108,14 +109,25 @@ def DFS_solve(s, row, col):
 
     return DFS_solve(s, row, col+1)
 
-def main():
+def main(selection):
+
+    filename = ""
+    
+    if selection == "1":
+        filename = "Sudokus2.txt"
+        
+    elif selection == "2":
+        filename = "generatedSodoku.txt"
+        Generator.main()
+        
+
     start = time.time()
     num_puzzles = 0
     s = []
     z = []
     org = ""
     text = ""
-    f = open('Sudokus2.txt') 
+    f = open(filename) 
     contents = f.read()
     for line in contents:
         line = ' '.join(line.split())
@@ -140,7 +152,7 @@ def main():
         if len(s) == 9:
             num_puzzles += 1
             #print("Puzzle Number {:d}".format(num_puzzles))
-            print("Original:")
+            print("Given Sodoku:")
             print_sudoku(s)
             initial_try(s)
             for line in s:

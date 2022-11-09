@@ -1,126 +1,128 @@
 from Verifier import *
 from Prover import *
 import pySudoku
+import os
 
-#Function that take imput from text and Build a list size 9 to org
-def buildTable(text,org):
-    while len(text) > 0:
-        l = []
+print()
+print()
+print("**************************************************************************")
+print("**** Hello and Welcome to the Zero-Knowledge Proof Example for Sudoku ****")
+print("**************************************************************************")
+print()
+print("a zero-knowledge proof or zero-knowledge protocol is a method by which one party (the prover) can prove to another party (the verifier) that a given statement is true while the prover avoids conveying any additional information apart from the fact that the statement is indeed true. The essence of zero-knowledge proofs is that it is trivial to prove that one possesses knowledge of certain information by simply revealing it; the challenge is to prove such possession without revealing the information itself or any additional information.")
+print()
+print()
+print("First of all we need a sodoku table with values included \n\nplease choose how to want to Genarate the table :")
+print(" 1.Export unsolved table from Sudokus2.txt file")
+print(" 2.Generate random unsolved table\n")
+tableselect = input("your selection : ")
+print()
 
-        # Get a row of numbers
-        while len(l) < 9:
-            if text[0].isdigit():
-                l.append(int(text[0]))
-            text = text[1:]
-
-        # Insert that row into the Sudoku grid
-        org.append(l)
-        if len(org) == 9:
-            break            
-
-#Create List of all the rows
-def rowsCollector(sodoku):
-    rows = {}
-    for i in range(9):
-        print(sodoku[i])
-        rows[i] = sodoku[i]
-        
-    return rows
-
-#Create List of all the colums
-def colCollector(sodoku):
-    cols = ""
-    colsList = []
-    for i in range(9):
-        for j in range(9):
-           cols += str(sodoku[j][i])
-    
-    buildTable(cols , colsList)
-    return colsList
-
-    #print(cols)
-
-#Create List of all the grids[3x3] inside the table
-def gridCollector(sodoku):
-    gridList = []
-    g1 = []
-    g2 = []
-    g3 = []
-
-    #grids 1 to 3
-    for i in range(9):
-        if i == 3 or i == 6:
-
-            gridList.append(g1)
-            gridList.append(g2)
-            gridList.append(g3)
-
-            g1 = []
-            g2 = []
-            g3 = []
-            
-        for j in range(9):
-            if j < 3:
-                g1.append(sodoku[i][j])
-
-            if j > 2 and j < 6:
-                g2.append(sodoku[i][j])
-
-            if j > 5 :
-                g3.append(sodoku[i][j])
-
-
-    gridList.append(g1)
-    gridList.append(g2)
-    gridList.append(g3)
-
-    return gridList            
-
-
-
-
-
-
+# print(tableselect)
 
 '''
 import input(sodoku table) from .txt file -> create sodoku -> solve
    this functuion returns 2 values [ Solve , Original]
 '''
-x  = pySudoku.main()
+x  = pySudoku.main(tableselect)
 
+print("\n Please Choose Confidence precentage : (80 or 90 , etc )")
+conf = input("-->")
+Prover = prover(conf)
+verifier = Verifier(conf)
+
+#Build solved + orginal tables
 solved = x[0]
-#print(s)
-#print(type(s))
-
-#print("x1\n")
 text = x[1]
-#print(text)
-
 org = []
+Prover.buildTable(text,org)
 
-buildTable(text,org)
-print(org)
-
-print()
-print("Row Collector : \n")
-rowsDict = rowsCollector(solved)
-print()
-
-print("Col Collector : \n")
-# colsList = []
-colsList = colCollector(solved)
-print(colsList)
-
-print()
-print("Row + colum Tables print as Sodoku :\n")
-pySudoku.print_sudoku(rowsDict)
-print()
-pySudoku.print_sudoku(colsList)
+#Collect Rows colums and grids
+rowsDict = Prover.rowsCollector(solved)
+colsList = Prover.colCollector(solved)
+gridList = Prover.gridCollector(solved)
 
 
-print()
-print("GridCollector : \n")
-gridList = gridCollector(solved)
-print(gridList)
+r = ["r1" , "r2" , "r3" , "r4" , "r5" , "r6" , "r7" , "r8" ,"r9"]
+c = ["c1" , "c2" , "c3" , "c4" , "c5" , "c6" , "c7" , "c8" , "c9"]
+g = ["g1" , "g2" , "g3" , "g4" , "g5" , "g6" , "g7" , "g8" , "g9"]
 
-print(gridList[0])
+def printrcg():
+    
+    print("\n-----------CHOOSE---ONE----PACKET-----------------")
+    print("ROWS : ")
+    print(r)
+    print("COULMS :")
+    print(c)
+    print("GRIDS:")
+    print(g)
+    print()
+    print("Exampl : r1 , r3 ....")
+
+
+
+while(True):
+    os.system("clear")
+    pySudoku.print_sudoku(org)
+    printrcg()
+    choose = ""
+    
+    print("Confidence : ")
+    print(verifier.getapprlvl())
+    print()
+
+    choose = input("your selection : ")
+    num = choose[1]
+    try:
+        if choose[0] == "r":
+
+            r.remove(choose)
+            print()
+            temp = list(rowsDict[int(num)-1])
+            temp.sort()
+            print(temp)
+            while(True):
+                 
+                answer = input("Is this packet valid ? : ( y , n ) :")
+
+                if answer == "y":
+                    verifier.approvePacket()
+                    break
+                elif answer == "n":
+                    break
+
+                else:
+                    print("Invalid Answer , please try again")
+
+        elif choose[0] == "c":
+
+            c.remove(choose)
+            print()
+            temp = list(colsList[int(num)-1])
+            temp.sort()
+            print(temp)
+            answer = input("Is this packet valid ? : ( y , n ) :")
+
+            if answer == "y":
+                verifier.approvePacket()
+
+        elif choose[0] == "g":
+
+            g.remove(choose)
+            print()
+            temp = gridList[int(num) -1 ]
+            temp.sort()
+            print(temp)
+            answer = input("Is this packet valid ? : ( y , n ) :")
+
+            if answer == "y":
+                verifier.approvePacket()
+        else:
+            raise
+    except:
+        print("Invalid selection - Packet "+ choose + " does not excist Please try again")
+
+    if verifier.isProff():
+        print("\n You reach more your confidence precetage , goodbey")
+        break
+1
