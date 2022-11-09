@@ -42,7 +42,40 @@ def colCollector(sodoku):
 
 #Create List of all the grids[3x3] inside the table
 def gridCollector(sodoku):
-    pass
+    gridList = []
+    g1 = []
+    g2 = []
+    g3 = []
+
+    #grids 1 to 3
+    for i in range(9):
+        if i == 3 or i == 6:
+
+            gridList.append(g1)
+            gridList.append(g2)
+            gridList.append(g3)
+
+            g1 = []
+            g2 = []
+            g3 = []
+            
+        for j in range(9):
+            if j < 3:
+                g1.append(sodoku[i][j])
+
+            if j > 2 and j < 6:
+                g2.append(sodoku[i][j])
+
+            if j > 5 :
+                g3.append(sodoku[i][j])
+
+
+    gridList.append(g1)
+    gridList.append(g2)
+    gridList.append(g3)
+
+    return gridList            
+
 
 
 
@@ -64,16 +97,30 @@ text = x[1]
 #print(text)
 
 org = []
+
 buildTable(text,org)
 print(org)
 
+print()
 print("Row Collector : \n")
 rowsDict = rowsCollector(solved)
+print()
 
 print("Col Collector : \n")
-colsList = []
+# colsList = []
 colsList = colCollector(solved)
 print(colsList)
 
-# pySudoku.print_sudoku(s)
-# pySudoku.print_sudoku(org)
+print()
+print("Row + colum Tables print as Sodoku :\n")
+pySudoku.print_sudoku(rowsDict)
+print()
+pySudoku.print_sudoku(colsList)
+
+
+print()
+print("GridCollector : \n")
+gridList = gridCollector(solved)
+print(gridList)
+
+print(gridList[0])
