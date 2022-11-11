@@ -119,6 +119,7 @@ def main(selection):
     elif selection == "2":
         filename = "generatedSodoku.txt"
         Generator.main()
+    
         
 
     start = time.time()

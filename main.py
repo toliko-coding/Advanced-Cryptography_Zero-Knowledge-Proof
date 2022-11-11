@@ -1,3 +1,10 @@
+
+'''
+Anatoli Kot 324413756
+Eden Barsheshet 203531918
+Yuval Varshavsky 207326703
+'''
+
 from Verifier import *
 from Prover import *
 import pySudoku
@@ -15,7 +22,10 @@ print()
 print("First of all we need a sodoku table with values included \n\nplease choose how to want to Genarate the table :")
 print(" 1.Export unsolved table from Sudokus2.txt file")
 print(" 2.Generate random unsolved table\n")
-tableselect = input("your selection : ")
+while True:
+    tableselect = input("your selection : ")
+    if tableselect == "1" or tableselect == "2":
+        break
 print()
 
 # print(tableselect)
@@ -68,12 +78,14 @@ while(True):
     choose = ""
     
     print("Confidence : ")
-    print(verifier.getapprlvl())
+    print("%.2f" % (verifier.getapprlvl() * 100) + "%")
     print()
 
     choose = input("your selection : ")
-    num = choose[1]
     try:
+        
+
+        num = choose[1]
         if choose[0] == "r":
 
             r.remove(choose)
@@ -117,12 +129,12 @@ while(True):
 
             if answer == "y":
                 verifier.approvePacket()
+        
         else:
             raise
     except:
         print("Invalid selection - Packet "+ choose + " does not excist Please try again")
 
     if verifier.isProff():
-        print("\n You reach more your confidence precetage , goodbey")
+        print("\n You reach your confidence precetage " + conf + "% , goodbey")
         break
-1

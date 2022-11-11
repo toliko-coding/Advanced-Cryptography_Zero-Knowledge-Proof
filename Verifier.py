@@ -22,5 +22,6 @@ class Verifier:
         return temp >= c
 
     def getapprlvl(self):
+        
         return self.valid / self.total_packets
         

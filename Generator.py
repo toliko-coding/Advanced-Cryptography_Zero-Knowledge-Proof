@@ -173,15 +173,35 @@ def main():
     print("x - table may be unsolvable\n")
     difficulty = input("Your Selection? (e , d , x) : ")
     print()
-    print("Generating " + difficulty + "sodoku (It may take some time with d level )")
+    print("Generating " + difficulty + " sodoku (It may take some time with d level )")
     start = time.time()
+
+    
+
 
     for _ in range(user_input):
         # 9 x 9 grid of 0s
         s = [[0]*9 for _ in range(9)]
 
         populateBoard(s, 0, 0)
-        reduce_sudoku(s, difficulty)
+
+        if difficulty == "x":
+
+            reduce_sudoku(s, "e")
+            print("before random :")
+            print(s)
+            randomlocation = random.randrange(8)
+            randomlocation2 = random.randrange(8)
+
+            randomcard = random.randint(1,9)
+            print(randomlocation)
+            print(randomcard)
+            s[randomlocation][randomlocation2] = randomcard
+            print("XXXXXx")
+            print(s)
+        else:
+            reduce_sudoku(s, difficulty)
+            
         output = toString(s)
         f.write(output)
 
