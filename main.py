@@ -52,7 +52,7 @@ rowsDict = Prover.rowsCollector(solved)
 colsList = Prover.colCollector(solved)
 gridList = Prover.gridCollector(solved)
 
-
+#Create Packets to choose
 r = ["r1" , "r2" , "r3" , "r4" , "r5" , "r6" , "r7" , "r8" ,"r9"]
 c = ["c1" , "c2" , "c3" , "c4" , "c5" , "c6" , "c7" , "c8" , "c9"]
 g = ["g1" , "g2" , "g3" , "g4" , "g5" , "g6" , "g7" , "g8" , "g9"]
@@ -69,8 +69,11 @@ def printrcg():
     print()
     print("Exampl : r1 , r3 ....")
 
+    if not r and not c and not g:
+        print("\n Not approved ! all the packets have been open")
+        quit()
 
-
+# Main loop - ask Verifier for feedback + uopdate the confidance
 while(True):
     os.system("clear")
     pySudoku.print_sudoku(org)
@@ -78,7 +81,7 @@ while(True):
     choose = ""
     
     print("Confidence : ")
-    print("%.2f" % (verifier.getapprlvl() * 100) + "%")
+    print("%.2f" % (verifier.getapprlvl() * 100) + "% \ "+conf+"%" )
     print()
 
     choose = input("your selection : ")
@@ -100,6 +103,7 @@ while(True):
                 if answer == "y":
                     verifier.approvePacket()
                     break
+
                 elif answer == "n":
                     break
 
