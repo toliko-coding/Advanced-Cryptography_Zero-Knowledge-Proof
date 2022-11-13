@@ -188,17 +188,14 @@ def main():
         if difficulty == "x":
 
             reduce_sudoku(s, "e")
-            print("before random :")
-            print(s)
+    
             randomlocation = random.randrange(8)
             randomlocation2 = random.randrange(8)
 
             randomcard = random.randint(1,9)
-            print(randomlocation)
-            print(randomcard)
+            
             s[randomlocation][randomlocation2] = randomcard
-            print("XXXXXx")
-            print(s)
+        
         else:
             reduce_sudoku(s, difficulty)
             

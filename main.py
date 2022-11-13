@@ -140,5 +140,5 @@ while(True):
         print("Invalid selection - Packet "+ choose + " does not excist Please try again")
 
     if verifier.isProff():
-        print("\n You reach your confidence precetage " + conf + "% , goodbey")
+        print("\n You reach your confidence precetage : %.2f" % (verifier.getapprlvl() * 100) + "% \ "+conf+"%")
         break
